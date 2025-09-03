@@ -1,0 +1,11 @@
+{
+  "name": "temipu-notifications-cron",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "send": "node sendNotification.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.5.0"
+  }
+}
