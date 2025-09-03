@@ -1,0 +1,29 @@
+name: Send Scheduled Notifications
+
+on:
+  schedule:
+  - cron: "*/3 * * * *"  # Cada 3 minutos (solo para pruebas)
+    - cron: "0 16 * * 0"   # Domingo 12:00 America/La_Paz (UTC-4)
+    - cron: "0 16 * * 3"   # Miércoles 12:00 America/La_Paz
+    - cron: "0 23 * * 5"   # Viernes 19:00 America/La_Paz
+  workflow_dispatch:       # Permite ejecutar manualmente desde la pestaña Actions
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm ci || npm install
+
+      - name: Run sender
+        run: npm run send
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
