@@ -27,3 +27,4 @@ jobs:
         run: npm run send
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          TOPIC: all
