@@ -6,7 +6,9 @@ if (!serviceAccountJson) {
   process.exit(1);
 }
 let sa;
-try { sa = JSON.parse(serviceAccountJson); } catch (e) {
+try {
+  sa = JSON.parse(serviceAccountJson);
+} catch (e) {
   console.error("JSON del service account inválido:", e);
   process.exit(1);
 }
@@ -46,11 +48,37 @@ async function main() {
     const notif = doc.data();
     console.log("Enviando seq:", notif.seq, "title:", notif.title);
 
-    // Enviar con topic en variable
-    const res = await messaging.send({ topic: TOPIC, notification: { title: notif.title, body: notif.body } });
+    // Notificación con canal y prioridad alta
+    const message = {
+      topic: TOPIC,
+      notification: {
+        title: notif.title,
+        body: notif.body,
+      },
+      android: {
+        priority: "high",
+        notification: {
+          channelId: "high_importance_channel",
+          priority: "high",
+          sound: "default",
+        },
+      },
+      apns: {
+        payload: {
+          aps: {
+            sound: "default",
+          },
+        },
+      },
+    };
+
+    const res = await messaging.send(message);
     console.log("Resultado de send:", res);
 
-    await doc.ref.update({ active: false, lastSentAt: admin.firestore.FieldValue.serverTimestamp() });
+    await doc.ref.update({
+      active: false,
+      lastSentAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
     console.log("Marcado como enviado");
   } catch (err) {
     console.error("❌ Error enviando notificación:", err);
