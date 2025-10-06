@@ -2,11 +2,28 @@ name: Send Scheduled Notifications
 
 on:
   schedule:
-    - cron: "*/3 * * * *"  # Cada 3 minutos (solo para pruebas)
-    - cron: "0 16 * * 0"   # Domingo 12:00 America/La_Paz (UTC-4)
-    - cron: "0 16 * * 3"   # Miércoles 12:00 America/La_Paz
-    - cron: "0 23 * * 5"   # Viernes 19:00 America/La_Paz
-  workflow_dispatch:       # Permite ejecutar manualmente desde la pestaña Actions
+    # Lunes 12:00 (Bolivia)  -> UTC = Lunes 16:00
+    - cron: "0 16 * * 1"
+    # Martes 19:00 (Bolivia) -> UTC = Martes 23:00
+    - cron: "0 23 * * 2"
+    # Miércoles 15:00 (Bolivia) -> UTC = Mié 19:00
+    - cron: "0 19 * * 3"
+    # Jueves 11:00 (Bolivia) -> UTC = Jue 15:00
+    - cron: "0 15 * * 4"
+    # Viernes 12:00 (Bolivia) -> UTC = Vie 16:00
+    - cron: "0 16 * * 5"
+    # Viernes 19:00 (Bolivia) -> UTC = Vie 23:00
+    - cron: "0 23 * * 5"
+    # Sábado 17:00 (Bolivia) -> UTC = Sáb 21:00
+    - cron: "0 21 * * 6"
+    # Sábado 22:00 (Bolivia) -> UTC = Domingo 02:00 (por eso day-of-week = 0)
+    - cron: "0 2 * * 0"
+    # Domingo 12:00 (Bolivia) -> UTC = Dom 16:00
+    - cron: "0 16 * * 0"
+    # Domingo 19:00 (Bolivia) -> UTC = Dom 23:00
+    - cron: "0 23 * * 0"
+  workflow_dispatch: # permite ejecutar manualmente desde Actions
+    inputs: {}
 
 jobs:
   notify:
