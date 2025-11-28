@@ -19,7 +19,7 @@ on:
     # Sábado 22:00 (Bolivia) -> UTC = Domingo 02:00 (por eso day-of-week = 0)
     - cron: "0 2 * * 0"
     # Domingo 12:00 (Bolivia) -> UTC = Dom 16:00
-    - cron: "0 16 * * 0"
+    - cron: "0 15 * * 0"
     # Domingo 19:00 (Bolivia) -> UTC = Dom 23:00
     - cron: "0 23 * * 0"
   workflow_dispatch: # permite ejecutar manualmente desde Actions
